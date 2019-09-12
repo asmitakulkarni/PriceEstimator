@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Welcome to Etsy Seller Tools</title>
+    
+</head>
+<body>
+    <div class="container-fluid">        
+    <h1>Welcome to Etsy Seller Tools</h1>
+    
+
+    <p>Get price recommendations to maximize sales for your Etsy items.</p>
+        <form name="inputs" action = "/" method = "POST">
+            Subcategory: 
+            <!-- <select name='category' required>
+                <option value='Bracelets'>Bracelets</option>
+                <option value='Necklaces'>Necklaces</option>
+                <option value='Earrings'>Earrings</option>
+                <option value='Anklets'>Anklets</option>
+                <option value='Brooches'>Brooches</option>
+            </select> -->
+            <select name='subcategory' required>
+                <option value='Chandelier Earrings'>Chandelier Earrings</option>
+                <option value='Clip On Earrings'>Clip On Earrings</option>
+                <option value='Dangle & Drop Earrings'>Dangle & Drop Earrings</option>
+                <option value='Ear Jackets & Climbers'>Ear Jackets & Climbers</option>
+                <option value='Hoop Earrings'>Hoop Earrings</option>
+                <option value='Stud Earrings'>Stud Earrings</option>
+            </select>
+            <br/>
+            
+            Is it customizable? 
+            <input type="radio" name="customizable" value="1" required/>Yes
+            <input type="radio" name="customizable" value="0" required/>No
+            <br/>
+            
+            What material is it made of? 
+            <select name='material' required>
+                <option value='Gold'>Gold</option>
+                <option value='Silver'>Silver</option>
+                <option value='Diamond'>Diamond</option>
+                <option value='Pearl'>Pearl</option>
+                <option value='Gemstone'>Gemstone</option>
+                <option value='Glass'>Glass</option>
+                <option value='None'>None of the above</option>
+            </select>
+            <br />
+
+            Who made it?
+            <input type="radio" name="who" value="i_did" required/>I did
+            <input type="radio" name="who" value="someone_else" required/>Someone else did
+            <input type="radio" name="who" value="collective" required/>Collective
+            <br/>
+
+            When was it made?
+            <input type="radio" name="when" value="standard" required/>Recently (2000 or later)
+            <input type="radio" name="when" value="vintage" required/>Vintage (before 2000)
+            <input type="radio" name="when" value="made_to_order" required/>Made-to-order
+            <br/>
+
+            Quantity
+            <input type="text" name="quantity" size="5" value="" required/>
+            <br/>
+
+            How are you thinking about pricing it $
+            <input type="text" name="price" size="6" value="" required/>
+            <br/>
+
+            How popular is it?  (optional) <br/>
+            Num Views: 
+            <input type="text" name="views" size="5" value="0" />
+            Num Favorers:
+            <input type="text" name="faves" size="5" value="0" />
+            <br/>
+
+            <input type="submit" />
+        </form>
+        <div>
+        {% if price %}
+            <h3> It's in cluster #<b>{{ cluster_id }}</b> </h3>
+            <h3> {% if price < user_price %} You're over-pricing! 
+                 {% elif price > user_price %} You can charge more! 
+                 {% elif price == user_price %} You should work for us!  Your price estimate was spot on. 
+                 {% endif %} 
+                 We suggest you price at <b>${{ price }}</b> </h3>
+            <p>
+                You submitted a <b>{% if not customizable %}non-{% endif %}customizable</b> 
+                {{ subcategory[:-1] }} made 
+                of <b>{{ material }}</b> that 
+                <b>{% if who == 'idid' %}you{% elif who == 'someone'%}someone else{% else %}you collectively{% endif %}</b> made.
+                The item <b>{% if when == 'recent' %}was made recently{% elif when == 'vintage'%} 
+                is vintage{% else %}is made-to-order{% endif %}</b>.
+                You're selling {% if quantity <= 1 %}one{% else %}many{% endif %}.  You wanted to price at ${{ user_price|round(2,'ceil') }}
+            </p>
+        {% endif %}
+
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+</body>
+</html>
